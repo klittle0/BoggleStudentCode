@@ -1,6 +1,5 @@
 public class Node {
     private boolean isWord;
-    private boolean visited;
     private Node[] next;
     private char value;
 
@@ -11,7 +10,6 @@ public class Node {
     // Constructor for Trie node
     public Node(){
         isWord = false;
-        visited = false;
         next = new Node[TRIE_CHILDREN];
     }
 
