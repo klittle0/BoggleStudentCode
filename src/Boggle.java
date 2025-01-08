@@ -20,10 +20,16 @@ public class Boggle {
         TST possibleWords = new TST();
         Stack<char> toBeVisited =
         // Insert all real words into the TST
-        for (String each : dictionary){
+        for (String each : dictionary) {
             possibleWords.insert(each);
         }
 
+        String prefix = "";
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                dfs(board, i, j, prefix);
+            }
+        }
         // Use DFS to find all possible paths
         char currentLet = board[0][0];
         // Add all surrounding nodes to a stack
@@ -31,6 +37,9 @@ public class Boggle {
         // Create a TST out of the real words that are given. Treat this like a dictionary
         // Search to see if all creates sequences exist
 
-    public static
+    }
+    public static void dfs(char[][] board, int row, int col, String prefix){
+
+    }
 }
 
