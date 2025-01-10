@@ -52,6 +52,7 @@ public class TST {
     public boolean lookup(String s){
         return lookupHelper(root, s, 0);
     }
+
     public boolean lookupHelper(Node currentNode, String s, int depth){
         // BASE CASES
         if (currentNode == null) {
@@ -76,6 +77,36 @@ public class TST {
         }
         // otherwise, letter == char at current node, so go straight down
         return lookupHelper(currentNode.getNext()[1], s, depth + 1);
+    }
+
+    public boolean prefixFind(String s){
+        return prefixFindHelper(root, s, 0);
+    }
+    // IDs whether a certain prefix exists in the TST
+    public boolean prefixFindHelper(Node currentNode, String s, int depth){
+        // BASE CASES
+        // If we've reached the end of the string, return whether the word exists
+        if (s.length() == depth){
+            return true;
+        }
+        if (currentNode == null) {
+            return false;
+        }
+
+        // RECURSIVE STEPS
+        char currentLetter = s.charAt(depth);
+        // Go left if the letter < char at current node
+        if (currentLetter < currentNode.getValue()){
+            // Don't increment depth, since we skipped the current letter
+            return prefixFindHelper(currentNode.getNext()[0], s, depth);
+        }
+        // Go right if the letter > char at current node
+        if (currentLetter > currentNode.getValue()){
+            // Don't increment depth here, since we skip the current node
+            return prefixFindHelper(currentNode.getNext()[2], s, depth);
+        }
+        // otherwise, letter == char at current node, so go straight down
+        return prefixFindHelper(currentNode.getNext()[1], s, depth + 1);
     }
 }
 
