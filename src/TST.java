@@ -14,7 +14,7 @@ public class TST {
         // BASE CASE: Have finished inserting the whole word
         // Set the last node of the word to "true"
         if (depth == s.length()){
-            currentNode.setWord();
+            currentNode.setWord(true);
             return;
         }
         // RECURSIVE STEPS:
@@ -59,8 +59,13 @@ public class TST {
             return false;
         }
         // If we've reached the end of the string, return whether we've found a word
-        if (s.length() == depth){
-            return currentNode.isWord();
+        // MAKE MORE EFFICIENT
+        if (s.length() == depth && currentNode.isWord()){
+            currentNode.setWord(false);
+            return true;
+        }
+        else if (s.length() == depth){
+            return false;
         }
 
         // RECURSIVE STEPS
@@ -86,11 +91,12 @@ public class TST {
     public boolean prefixFindHelper(Node currentNode, String s, int depth){
         // BASE CASES
         // If we've reached the end of the string, return whether the word exists
-        if (s.length() == depth){
-            return true;
-        }
         if (currentNode == null) {
             return false;
+        }
+        // Shows that word exists
+        if (s.length() == depth){
+            return true;
         }
 
         // RECURSIVE STEPS

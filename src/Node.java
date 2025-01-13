@@ -27,8 +27,8 @@ public class Node {
     }
 
     // Sets it so that the real word ends here
-    public void setWord(){
-        isWord = true;
+    public void setWord(boolean yn){
+        isWord = yn;
     }
 
     // Sets the value associated with a TST node
