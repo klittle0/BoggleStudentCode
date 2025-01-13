@@ -3,18 +3,10 @@ public class Node {
     private Node[] next;
     private char value;
 
-    static int TRIE_CHILDREN = 256;
     static int TST_CHILDREN = 3;
 
-    // GO BACK THROUGH & UPDATE PER MR. BLICK'S FEEDBACK ON SPELLCHECK!!!
-    // Constructor for Trie node
+    // Constructor for TST node
     public Node(){
-        isWord = false;
-        next = new Node[TRIE_CHILDREN];
-    }
-
-    // OVERRIDE constructor: this is a node for a TST
-    public Node(int i){
         isWord = false;
         // 3 null nodes branch off of each node
         next = new Node[TST_CHILDREN];

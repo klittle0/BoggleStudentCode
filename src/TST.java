@@ -1,9 +1,11 @@
+// Code by Kate Little
+
 public class TST {
     Node root;
 
     // Constructor
     public TST(){
-        root = new Node(1);
+        root = new Node();
     }
 
     // Recursively insert a particular word into the TST
@@ -26,7 +28,7 @@ public class TST {
         // Go left if letter < current node
         if (currentLetter < currentNode.getValue()){
             if (currentNode.getNext()[0] == null){
-                currentNode.getNext()[0] = new Node(1);
+                currentNode.getNext()[0] = new Node();
             }
             // Don't increment depth here, since we skipped the current node
             insertHelper(currentNode.getNext()[0], s, depth);
@@ -34,7 +36,7 @@ public class TST {
         // Go right if letter > current node
         else if (currentLetter > currentNode.getValue()){
             if (currentNode.getNext()[2] == null){
-                currentNode.getNext()[2] = new Node(1);
+                currentNode.getNext()[2] = new Node();
             }
             // Don't increment depth here, since we skipped the current node
             insertHelper(currentNode.getNext()[2], s, depth);
@@ -42,30 +44,31 @@ public class TST {
         // Otherwise, go straight down
         else{
             if (currentNode.getNext()[1] == null){
-                currentNode.getNext()[1] = new Node(1);
+                currentNode.getNext()[1] = new Node();
             }
             insertHelper(currentNode.getNext()[1], s, depth + 1);
         }
     }
 
     // Identify whether a particular string exists in the TST
-    public boolean lookup(String s){
+    public int lookup(String s){
         return lookupHelper(root, s, 0);
     }
 
-    public boolean lookupHelper(Node currentNode, String s, int depth){
+    public int lookupHelper(Node currentNode, String s, int depth){
         // BASE CASES
+        // If the prefix isn't found in any capacity
         if (currentNode == null) {
-            return false;
+            return 0;
         }
-        // If we've reached the end of the string, return whether we've found a word
-        // MAKE MORE EFFICIENT
+        // If we've reached the end of the string, return whether a word exists
         if (s.length() == depth && currentNode.isWord()){
             currentNode.setWord(false);
-            return true;
+            return 1;
         }
+        // If a prefix is found in TST but isn't marked as a real word
         else if (s.length() == depth){
-            return false;
+            return 2;
         }
 
         // RECURSIVE STEPS
@@ -83,36 +86,4 @@ public class TST {
         // otherwise, letter == char at current node, so go straight down
         return lookupHelper(currentNode.getNext()[1], s, depth + 1);
     }
-
-    public boolean prefixFind(String s){
-        return prefixFindHelper(root, s, 0);
-    }
-    // IDs whether a certain prefix exists in the TST
-    public boolean prefixFindHelper(Node currentNode, String s, int depth){
-        // BASE CASES
-        // If we've reached the end of the string, return whether the word exists
-        if (currentNode == null) {
-            return false;
-        }
-        // Shows that word exists
-        if (s.length() == depth){
-            return true;
-        }
-
-        // RECURSIVE STEPS
-        char currentLetter = s.charAt(depth);
-        // Go left if the letter < char at current node
-        if (currentLetter < currentNode.getValue()){
-            // Don't increment depth, since we skipped the current letter
-            return prefixFindHelper(currentNode.getNext()[0], s, depth);
-        }
-        // Go right if the letter > char at current node
-        if (currentLetter > currentNode.getValue()){
-            // Don't increment depth here, since we skip the current node
-            return prefixFindHelper(currentNode.getNext()[2], s, depth);
-        }
-        // otherwise, letter == char at current node, so go straight down
-        return prefixFindHelper(currentNode.getNext()[1], s, depth + 1);
-    }
 }
-
